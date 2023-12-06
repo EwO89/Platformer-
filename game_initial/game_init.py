@@ -12,7 +12,6 @@ def init_icon_image():
 
 
 def init_window():
-    flag = False
     init_screen()
     init_icon_image()
     init_name_game()
@@ -23,7 +22,6 @@ def init_window():
     player.update()
     screen.blit(player.image, player.rect)
     world.draw()
-
 
 
 name_game = None
@@ -43,7 +41,7 @@ def init_screen():
     global width, height
     width, height = 1000, 1000
     global screen
-    screen = pygame.display.set_mode((width, height), pygame.FULLSCREEN)
+    screen = pygame.display.set_mode((width, height), pygame.FULLSCREEN | pygame.HWSURFACE | pygame.DOUBLEBUF)
     return screen
 
 
@@ -58,7 +56,6 @@ def init_sun_image_fullscreen():
     icon_sun = pygame.image.load(photo_path)
     width, height = 100, 100
     screen.blit(icon_sun, (width, height))
-    return pygame.display.update()
 
 
 def init_sun_image_frame_screen():
@@ -70,7 +67,6 @@ def init_sun_image_frame_screen():
     new_width_for_frame_screen, new_height_for_frame_screen = screen.get_width() // 10, screen.get_height() // 10
     scaled_icon_sun = pygame.transform.scale(icon_sun, (new_width_for_frame_screen, new_height_for_frame_screen))
     screen.blit(scaled_icon_sun, (100, 100))
-    return pygame.display.update()
 
 
 def init_sky_image_for_fullscreen():
@@ -81,7 +77,6 @@ def init_sky_image_for_fullscreen():
     icon_sky = pygame.image.load(photo_path)
     width, height = 0, 0
     screen.blit(icon_sky, (width, height))
-    return pygame.display.update()
 
 
 def change_the_screen():
@@ -117,7 +112,6 @@ def draw_grid():
     for line in range(0, 20):
         pygame.draw.line(screen, (255, 255, 255), (0, line * tile_size), (width, line * tile_size))
         pygame.draw.line(screen, (255, 255, 255), (line * tile_size, 0), (line * tile_size, height))
-        pygame.display.update()
 
 
 def init_dirt():
@@ -178,7 +172,6 @@ class World:
     def draw(self):
         for tile in self.tile_list:
             screen.blit(tile[0], tile[1])
-        pygame.display.update()
 
 
 class Player():
@@ -208,7 +201,6 @@ class Player():
         self.rect.y += dy
 
 
-
 world_data = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
@@ -233,3 +225,13 @@ world_data = [
 ]
 player = Player(100, 1000 - 130)
 world = World(world_data)
+
+
+def press_K_SPACE():
+    screen.fill((0, 0, 0))
+    init_sky_image_for_fullscreen()
+    init_sun_image_fullscreen()
+    draw_grid()
+    player.update()
+    world.draw()
+    screen.blit(player.image, player.rect)

@@ -11,14 +11,11 @@ while run:
             if event.key == pygame.K_F11:
                 game_init.change_the_screen()
             if event.key == pygame.K_LEFT:
-                game_init.screen.fill((0, 0, 0))
-                game_init.init_sky_image_for_fullscreen()
-                game_init.init_sun_image_fullscreen()
-                game_init.draw_grid()
-                game_init.player.update()
-                game_init.world.draw()
-                game_init.screen.blit(game_init.player.image, game_init.player.rect)
+                game_init.press_K_LEFT()
             if event.key == pygame.K_SPACE:
                 game_init.press_K_SPACE()
+            if event.key == pygame.K_RIGHT:
+                game_init.press_K_RIGHT()
         pygame.display.update()
 pygame.quit()
+#globals()[f'init_guy{num}']()

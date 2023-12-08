@@ -15,7 +15,7 @@ def init_window():
     init_screen()
     init_icon_image()
     init_name_game()
-    fps_limit()
+    #fps_limit()
     init_sky_image_for_fullscreen()
     init_sun_image_fullscreen()
     draw_grid()
@@ -95,10 +95,10 @@ def change_the_screen():
         draw_grid()
 
 
-def fps_limit():
+'''def fps_limit():
     clock = pygame.time.Clock()
     fps = 60
-    clock.tick(fps)
+    clock.tick(fps)'''
 
 
 tile_size = 50
@@ -181,24 +181,33 @@ class Player():
         self.rect.x = x
         self.rect.y = y
         self.vel_y = 0
+        self.jumped = False
 
     def update(self):
         dx = 0
         dy = 0
         key = pygame.key.get_pressed()
-        if key[pygame.K_SPACE]:
+        if key[pygame.K_SPACE] and not self.jumped:
             self.vel_y = -15
+            self.jumped = True
+        if not key[pygame.K_SPACE]:
+            self.jumped = False
         if key[pygame.K_LEFT]:
             dx -= 5
         if key[pygame.K_RIGHT]:
             dx += 5
-
         self.vel_y += 1
         if self.vel_y > 10:
             self.vel_y = 10
         dy += self.vel_y
+
+
         self.rect.x += dx
         self.rect.y += dy
+
+        if self.rect.bottom > height:
+            self.rect.bottom = height
+            dy = 0
 
 
 world_data = [
@@ -228,6 +237,26 @@ world = World(world_data)
 
 
 def press_K_SPACE():
+    screen.fill((0, 0, 0))
+    init_sky_image_for_fullscreen()
+    init_sun_image_fullscreen()
+    draw_grid()
+    player.update()
+    world.draw()
+    screen.blit(player.image, player.rect)
+
+
+def press_K_RIGHT():
+    screen.fill((0, 0, 0))
+    init_sky_image_for_fullscreen()
+    init_sun_image_fullscreen()
+    draw_grid()
+    player.update()
+    world.draw()
+    screen.blit(player.image, player.rect)
+
+
+def press_K_LEFT():
     screen.fill((0, 0, 0))
     init_sky_image_for_fullscreen()
     init_sun_image_fullscreen()

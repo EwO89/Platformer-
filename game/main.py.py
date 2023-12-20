@@ -321,7 +321,7 @@ class Player():
         if game_over == 0:
             # get keypresses
             key = pygame.key.get_pressed()
-            if key[pygame.K_SPACE] and self.jumped == False and not self.in_air:
+            if key[pygame.K_SPACE] and not self.jumped and not self.in_air:
                 jump_fx.play()
                 self.vel_y = -15
                 self.jumped = True
@@ -335,7 +335,7 @@ class Player():
                 dx += 5
                 self.counter += 1
                 self.direction = 1
-            if key[pygame.K_LEFT] == False and not key[pygame.K_RIGHT]:
+            if not key[pygame.K_LEFT] and not key[pygame.K_RIGHT]:
                 self.counter = 0
                 self.index = 0
                 if self.direction == 1:

@@ -20,6 +20,7 @@
    
  ```sh
   git clone https://github.com/EwO89/Platformer-.git
+  cd Platformer-/
  ```
 2. Установите необходимые зависимости:
 
